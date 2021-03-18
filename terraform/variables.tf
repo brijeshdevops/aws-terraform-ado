@@ -1,12 +1,12 @@
-variable "projectName" {
-  type        = string
-  description = "Project ID"
-}
-
-variable "envType" {
-  type        = string
-  description = "Type of Environment"
-}
+//variable "projectName" {
+//  type        = string
+//  description = "Project ID"
+//}
+//
+//variable "envType" {
+//  type        = string
+//  description = "Type of Environment"
+//}
 
 //
 //

@@ -1,6 +1,6 @@
 # Project Config
-projectName   = "poc-app1"
-envType       = "dev"
+//projectName   = "poc-app1"
+//envType       = "dev"
 //cloud_region = "us-east-2"
 //
 //# EKS Config
