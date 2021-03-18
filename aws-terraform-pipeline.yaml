@@ -46,8 +46,6 @@ variables:
   envType: ${{ parameters.envType }}
   terraformDir: aws-terraform/terraform
   terraformBackend: 'tempworkingbucket01ohio'
-  projectName: ${{ parameters.projectName }}
-  envType: ${{ parameters.envType }}
 
 jobs:
 
