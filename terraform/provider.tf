@@ -1,6 +1,6 @@
 variable "region" {
   type = string
-  description = "AWS Region, where to deploy ELK cluster."
+  description = "AWS Region"
   default = "us-east-2"
 }
 
@@ -27,7 +27,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "tempworkingbucket01ohio"
+    bucket         = "tstatebucket01ohio"
     key            = "terraform.tfstate"
     dynamodb_table = "terraform_lock"   # Partition Key LockID
     region         = var.region
@@ -35,4 +35,3 @@ terraform {
     //profile                 = "ana"
   }
 }
-
