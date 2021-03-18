@@ -13,7 +13,7 @@ parameters:
 
 - name: serviceArmAws
   displayName: Select AWS Service Connection
-  default: AWS-DevOkta-Connection
+  default: AWSDevOktaTerraform
   type: string
 
 - name: projectName
