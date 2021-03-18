@@ -13,10 +13,8 @@ parameters:
 
 - name: serviceArmAws
   displayName: Select AWS Service Connection
-  default: AWS_devsecops_testterraform
+  default: AWS-DevOkta-Connection
   type: string
-  values:
-    - AWS-DevOkta-Connection
 
 - name: projectName
   displayName: Enter Project Name
