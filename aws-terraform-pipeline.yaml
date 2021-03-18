@@ -1,0 +1,84 @@
+trigger:
+- none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+#variables:
+#  - template: config.yaml
+#  - template: variables.yaml
+#  - template: common-variables.yaml
+
+parameters:
+
+- name: serviceArmAws
+  displayName: Select AWS Service Connection
+  default: AWS_devsecops_testterraform
+  type: string
+  values:
+    - AWS-DevOkta-Connection
+
+- name: projectName
+  displayName: Enter Project Name
+  default: poc1
+  type: string
+
+- name: envType
+  displayName: Select Type of Environment
+  default: dev
+  type: string
+  values:
+    - dev
+    - test
+    - prod
+
+- name: destroyResource
+  displayName: Do you want to destroy the resources?
+  default: false
+  type: boolean
+  values:
+    - true
+    - false
+
+variables:
+  projectName: '${{ parameters.projectName }}'
+  serviceArmAws: ${{ parameters.serviceArmAws }}
+  envType: ${{ parameters.envType }}
+  terraformDir: aws-terraform/terraform
+  terraformBackend: 'tempworkingbucket01ohio'
+  projectName: ${{ parameters.projectName }}
+  envType: ${{ parameters.envType }}
+
+jobs:
+
+- job: terraform
+  displayName: Run Terraform
+  steps:
+
+  - task: TerraformTaskV1@0
+    displayName: Terraform Init (AWS)
+    inputs:
+      provider: 'aws'
+      command: 'init'
+      backendServiceAWS: '$(serviceArmAws)'
+      backendAWSBucketName: '$(terraformBackend)'
+      backendAWSKey: 'terraform.tfstate'
+      workingDirectory: '$(terraformDir)'
+
+  - task: TerraformTaskV1@0
+    displayName: Terraform Plan (AWS)
+    inputs:
+      provider: 'aws'
+      command: 'plan'
+      environmentServiceNameAWS: '$(serviceArmAws)'
+      workingDirectory: '$(terraformDir)'
+
+  - task: TerraformTaskV1@0
+    displayName: Terraform Apply (AWS)
+    name: awsTerraformApply
+    inputs:
+      provider: 'aws'
+      command: 'apply'
+      environmentServiceNameAWS: '$(serviceArmAws)'
+      workingDirectory: '$(terraformDir)'
+      commandOptions: --auto-approve -lock=false
