@@ -30,8 +30,8 @@ terraform {
   backend "s3" {
     bucket         = "tstatebucket01ohio"
     key            = "terraform.tfstate"
-    dynamodb_table = "terraform_lock"   # Partition Key LockID
-    region         = var.region
+//    dynamodb_table = "terraform_lock"   # Partition Key LockID
+    region         = "us-east-2"
     //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
     //profile                 = "ana"
   }

@@ -81,7 +81,7 @@ jobs:
       region: 'us-east-2'
       backendServiceAWS: '$(serviceArmAws)'
       backendAWSBucketName: '$(terraformBackend)'
-#      backendAWSKey: 'terraform.tfstate'
+      backendAWSKey: 'terraform.tfstate'
       workingDirectory: '$(terraformDir)'
 
   - task: TerraformTaskV1@0
