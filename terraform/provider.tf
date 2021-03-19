@@ -25,13 +25,14 @@ provider "aws" {
   //profile                 = "ana"
 }
 
-terraform {
-  backend "s3" {
-    bucket         = "tstatebucket01ohio"
-    key            = "terraform.tfstate"
-    dynamodb_table = "terraform_lock"   # Partition Key LockID
-    region         = var.region
-    //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
-    //profile                 = "ana"
-  }
-}
+// ADO Pipeline task will take care of this.
+//terraform {
+//  backend "s3" {
+//    bucket         = "tstatebucket01ohio"
+//    key            = "terraform.tfstate"
+//    dynamodb_table = "terraform_lock"   # Partition Key LockID
+//    region         = var.region
+//    //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
+//    //profile                 = "ana"
+//  }
+//}
