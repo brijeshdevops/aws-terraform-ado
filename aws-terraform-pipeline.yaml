@@ -104,7 +104,7 @@ jobs:
 
   - task: TerraformTaskV1@0
     displayName: Terraform Delete (AWS)
-    name: awsTerraformApply
+    name: awsTerraformDelete
     inputs:
       provider: 'aws'
       command: 'destroy'
