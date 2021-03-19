@@ -56,6 +56,7 @@ jobs:
     inputs:
       provider: 'aws'
       command: 'init'
+      region: 'us-east-2'
       backendServiceAWS: '$(serviceArmAws)'
       backendAWSBucketName: '$(terraformBackend)'
       backendAWSKey: 'terraform.tfstate'
