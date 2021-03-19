@@ -101,3 +101,13 @@ jobs:
       environmentServiceNameAWS: '$(serviceArmAws)'
       workingDirectory: '$(terraformDir)'
       commandOptions: --auto-approve -lock=false
+
+  - task: TerraformTaskV1@0
+    displayName: Terraform Delete (AWS)
+    name: awsTerraformApply
+    inputs:
+      provider: 'aws'
+      command: 'destroy'
+      environmentServiceNameAWS: '$(serviceArmAws)'
+      workingDirectory: '$(terraformDir)'
+      commandOptions: --auto-approve -lock=false
