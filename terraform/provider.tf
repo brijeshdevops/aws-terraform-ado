@@ -4,6 +4,11 @@ variable "region" {
   default = "us-east-2"
 }
 
+locals {
+  common_prefix = "${var.projec_name}-${var.env_type}"
+  elk_domain = "${local.common_prefix}"
+}
+
 data "aws_region" "current" {}
 
 data "aws_caller_identity" "current" {}

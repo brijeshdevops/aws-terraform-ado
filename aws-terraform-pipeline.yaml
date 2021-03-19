@@ -30,6 +30,11 @@ parameters:
     - test
     - prod
 
+- name: sshKeyPair
+  displayName: Enter existing SSH Key Pair Name
+  default: devoktakeyohio
+  type: string
+
 - name: destroyResource
   displayName: Do you want to destroy the resources?
   default: false
@@ -39,9 +44,10 @@ parameters:
     - false
 
 variables:
-  projectName: '${{ parameters.projectName }}'
+  projectName: ${{ parameters.projectName }}
   serviceArmAws: ${{ parameters.serviceArmAws }}
   envType: ${{ parameters.envType }}
+  sshKeyPair: ${{ parameters.sshKeyPair }}
   terraformDir: terraform
   terraformBackend: 'tstatebucket01ohio'
 
@@ -50,6 +56,21 @@ jobs:
 - job: terraform
   displayName: Run Terraform
   steps:
+
+  - powershell: |
+
+      Add-Content $(terraform-dir)/terraform.tfvars "`n"
+      Add-Content $(terraform-dir)/terraform.tfvars 'project_name = "$(projectName)"'
+      Add-Content $(terraform-dir)/terraform.tfvars 'env_type = "$(envType)"'
+
+      Add-Content $(terraform-dir)/terraform.tfvars 'vpc_cidr = "11.0.0.0/16"'
+      Add-Content $(terraform-dir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
+
+      echo 'Reading Terraform Variables....'
+
+      Get-Content -Path $(terraform-dir)/terraform.tfvars
+
+    name: Setting Variables
 
   - task: TerraformTaskV1@0
     displayName: Terraform Init (AWS)
@@ -62,13 +83,13 @@ jobs:
       backendAWSKey: 'terraform.tfstate'
       workingDirectory: '$(terraformDir)'
 
-#  - task: TerraformTaskV1@0
-#    displayName: Terraform Plan (AWS)
-#    inputs:
-#      provider: 'aws'
-#      command: 'plan'
-#      environmentServiceNameAWS: '$(serviceArmAws)'
-#      workingDirectory: '$(terraformDir)'
+  - task: TerraformTaskV1@0
+    displayName: Terraform Plan (AWS)
+    inputs:
+      provider: 'aws'
+      command: 'plan'
+      environmentServiceNameAWS: '$(serviceArmAws)'
+      workingDirectory: '$(terraformDir)'
 #
 #  - task: TerraformTaskV1@0
 #    displayName: Terraform Apply (AWS)
