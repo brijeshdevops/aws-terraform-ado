@@ -80,7 +80,7 @@ jobs:
       command: 'init'
       region: 'us-east-2'
       backendServiceAWS: '$(serviceArmAws)'
-#      backendAWSBucketName: '$(terraformBackend)'
+      backendAWSBucketName: '$(terraformBackend)'
 #      backendAWSKey: 'terraform.tfstate'
       workingDirectory: '$(terraformDir)'
 
