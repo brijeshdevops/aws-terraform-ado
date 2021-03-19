@@ -48,7 +48,7 @@ variables:
   serviceArmAws: ${{ parameters.serviceArmAws }}
   envType: ${{ parameters.envType }}
   sshKeyPair: ${{ parameters.sshKeyPair }}
-  terraformDir: terraform
+  terraformDir: terraform-core
   terraformBackend: 'tstatebucket01ohio'
 
 jobs:
@@ -101,6 +101,12 @@ jobs:
       environmentServiceNameAWS: '$(serviceArmAws)'
       workingDirectory: '$(terraformDir)'
       commandOptions: --auto-approve -lock=true
+
+  - powershell: |
+      $terraformOutput = Get-Content "$(awsTerraformApply.jsonOutputVariablesPath)"
+      $terraformOutput = $terraformOutput | ConvertFrom-Json
+
+      Write-Host $terraformOutput
 
 #  - task: TerraformTaskV1@0
 #    displayName: Terraform Delete (AWS)

@@ -7,6 +7,14 @@ resource "aws_vpc" "demo" {
   }
 }
 
+output "vpc_id" {
+  value = aws_vpc.id
+}
+
+output "vpc_cidr" {
+  value = aws_vpc.cidr_block
+}
+
 resource "aws_subnet" "public_1" {
   vpc_id     = aws_vpc.demo.id
   cidr_block = cidrsubnet(aws_vpc.demo.cidr_block, 4, 0)
@@ -181,3 +189,4 @@ resource "aws_route_table_association" "nated_2" {
     subnet_id = aws_subnet.nated_2.id
     route_table_id = aws_route_table.nated_2.id
 }
+
