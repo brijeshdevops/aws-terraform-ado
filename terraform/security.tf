@@ -14,6 +14,14 @@ resource "aws_security_group" "es" {
   }
 
   ingress {
+      description = "Home-VPN"
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      cidr_blocks = ["104.190.188.27"]
+  }
+
+  ingress {
       description = "Default Self Access"
       from_port = 0
       to_port = 0
