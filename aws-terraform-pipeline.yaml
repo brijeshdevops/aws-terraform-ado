@@ -42,7 +42,7 @@ variables:
   projectName: '${{ parameters.projectName }}'
   serviceArmAws: ${{ parameters.serviceArmAws }}
   envType: ${{ parameters.envType }}
-  terraformDir: aws-terraform/terraform
+  terraformDir: terraform
   terraformBackend: 'tstatebucket01ohio'
 
 jobs:
