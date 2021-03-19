@@ -4,6 +4,7 @@ resource "aws_security_group" "es" {
   vpc_id = aws_vpc.demo.id
 
   ingress {
+      description = "VPC Access"
       from_port = 0
       to_port = 0
       protocol = "-1"
@@ -11,4 +12,20 @@ resource "aws_security_group" "es" {
           aws_vpc.demo.cidr_block
       ]
   }
+
+  ingress {
+      description = "Default Self Access"
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      self = "true"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
 }
