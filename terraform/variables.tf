@@ -1,9 +1,9 @@
-variable "projectName" {
+variable "project_name" {
   type        = string
   description = "Project ID"
 }
 
-variable "envType" {
+variable "env_type" {
   type        = string
   description = "Type of Environment"
 }
