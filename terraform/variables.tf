@@ -1,13 +1,22 @@
-//variable "projectName" {
-//  type        = string
-//  description = "Project ID"
-//}
-//
-//variable "envType" {
-//  type        = string
-//  description = "Type of Environment"
-//}
+variable "projectName" {
+  type        = string
+  description = "Project ID"
+}
 
+variable "envType" {
+  type        = string
+  description = "Type of Environment"
+}
+
+variable "vpc_cidr" {
+  type        = string
+  description = "VPC CIDR"
+}
+
+variable "node_ssh_key" {
+  type        = string
+  description = "Name of existing SSK key for login to EC2/Nodes"
+}
 //
 //
 //variable "cloud_region" {
@@ -15,10 +24,7 @@
 //  description = "Region where resources will be created"
 //}
 //
-//variable "vpc_cidr" {
-//  type        = string
-//  description = "VPC CIDR"
-//}
+
 //
 //variable "public_subnets" {
 //  type        = list(string)
@@ -30,10 +36,7 @@
 //  description = "List of Private Subnets"
 //}
 //
-//variable "node_ssh_key" {
-//  type        = string
-//  description = "Name of existing SSK key for login to EC2/Nodes"
-//}
+
 //
 //variable "eks_version" {
 //  type        = string
