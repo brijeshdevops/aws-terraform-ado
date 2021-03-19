@@ -5,7 +5,7 @@ variable "region" {
 }
 
 locals {
-  common_prefix = "${var.projec_name}-${var.env_type}"
+  common_prefix = "${var.project_name}-${var.env_type}"
   elk_domain = "${local.common_prefix}"
 }
 
