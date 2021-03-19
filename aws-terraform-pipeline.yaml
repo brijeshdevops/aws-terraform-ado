@@ -70,7 +70,8 @@ jobs:
 
       Get-Content -Path $(terraform-dir)/terraform.tfvars
 
-    name: Setting Variables
+    name: setVariables
+    displayName: Setting Variables
 
   - task: TerraformTaskV1@0
     displayName: Terraform Init (AWS)
