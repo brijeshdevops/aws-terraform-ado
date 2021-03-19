@@ -80,8 +80,8 @@ jobs:
       command: 'init'
       region: 'us-east-2'
       backendServiceAWS: '$(serviceArmAws)'
-      backendAWSBucketName: '$(terraformBackend)'
-      backendAWSKey: 'terraform.tfstate'
+#      backendAWSBucketName: '$(terraformBackend)'
+#      backendAWSKey: 'terraform.tfstate'
       workingDirectory: '$(terraformDir)'
 
   - task: TerraformTaskV1@0
@@ -100,14 +100,14 @@ jobs:
       command: 'apply'
       environmentServiceNameAWS: '$(serviceArmAws)'
       workingDirectory: '$(terraformDir)'
-      commandOptions: --auto-approve -lock=false
+      commandOptions: --auto-approve -lock=true
 
-  - task: TerraformTaskV1@0
-    displayName: Terraform Delete (AWS)
-    name: awsTerraformDelete
-    inputs:
-      provider: 'aws'
-      command: 'destroy'
-      environmentServiceNameAWS: '$(serviceArmAws)'
-      workingDirectory: '$(terraformDir)'
-      commandOptions: --auto-approve -lock=false
+#  - task: TerraformTaskV1@0
+#    displayName: Terraform Delete (AWS)
+#    name: awsTerraformDelete
+#    inputs:
+#      provider: 'aws'
+#      command: 'destroy'
+#      environmentServiceNameAWS: '$(serviceArmAws)'
+#      workingDirectory: '$(terraformDir)'
+#      commandOptions: --auto-approve -lock=false
