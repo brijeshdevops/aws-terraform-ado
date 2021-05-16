@@ -14,11 +14,11 @@ parameters:
 
 - name: serviceArmAws
   displayName: Select AWS Service Connection
-  default: aws-9145
+  default: aws-9154
   type: string
   values:
     - AWSDevOktaTerraform
-    - aws-9145
+    - aws-9154
 
 - name: projectName
   displayName: Enter Project Name
@@ -54,6 +54,7 @@ variables:
   sshKeyPair: ${{ parameters.sshKeyPair }}
   terraformDir: terraform-core
   terraformBackend: 'tstatebucket01ohio'
+  region: ${{ parameters.region }}
 
 jobs:
 
@@ -82,7 +83,7 @@ jobs:
     inputs:
       provider: 'aws'
       command: 'init'
-      region: 'us-east-2'
+      region: '$(region)'
       backendServiceAWS: '$(serviceArmAws)'
       backendAWSBucketName: '$(terraformBackend)'
       backendAWSKey: 'terraform.tfstate'
