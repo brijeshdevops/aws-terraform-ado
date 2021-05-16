@@ -14,8 +14,11 @@ parameters:
 
 - name: serviceArmAws
   displayName: Select AWS Service Connection
-  default: AWSDevOktaTerraform
+  default: aws-9145
   type: string
+  values:
+    - AWSDevOktaTerraform
+    - aws-9145
 
 - name: projectName
   displayName: Enter Project Name
