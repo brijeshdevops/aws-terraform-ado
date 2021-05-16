@@ -20,6 +20,23 @@ parameters:
     - AWSDevOktaTerraform
     - aws-9154
 
+- name: region
+  displayName: Select AWS Region
+  default: us-east-1
+  type: string
+  values:
+    - us-east-1
+    - us-east-2
+
+- name: terraformBackend
+  displayName: Terraform Backend S3 Bucket
+  default: cf-templates-1n70pnlozst11-us-east-1
+  type: string
+  values:
+    - cf-templates-1n70pnlozst11-us-east-1
+    - tstatebucket01ohio
+
+
 - name: projectName
   displayName: Enter Project Name
   default: poc1
@@ -53,7 +70,7 @@ variables:
   envType: ${{ parameters.envType }}
   sshKeyPair: ${{ parameters.sshKeyPair }}
   terraformDir: terraform-core
-  terraformBackend: 'tstatebucket01ohio'
+  terraformBackend: ${{ parameters.terraformBackend }}
   region: ${{ parameters.region }}
 
 jobs:
