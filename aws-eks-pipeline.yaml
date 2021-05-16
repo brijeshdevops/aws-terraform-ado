@@ -1,0 +1,94 @@
+trigger:
+- master
+
+pool:
+  name: AWS
+#  vmImage: 'AWS'
+
+#variables:
+#  - template: config.yaml
+#  - template: variables.yaml
+#  - template: common-variables.yaml
+
+parameters:
+
+- name: serviceArmAws
+  displayName: Select AWS Service Connection
+  default: AWSDevOktaTerraform
+  type: string
+
+- name: projectName
+  displayName: Enter Project Name
+  default: poc1
+  type: string
+
+- name: envType
+  displayName: Select Type of Environment
+  default: dev
+  type: string
+  values:
+    - dev
+    - test
+    - prod
+
+- name: sshKeyPair
+  displayName: Enter existing SSH Key Pair Name
+  default: devoktakeyohio
+  type: string
+
+- name: destroyResource
+  displayName: Do you want to destroy the resources?
+  default: false
+  type: boolean
+  values:
+    - true
+    - false
+
+variables:
+  projectName: ${{ parameters.projectName }}
+  serviceArmAws: ${{ parameters.serviceArmAws }}
+  envType: ${{ parameters.envType }}
+  sshKeyPair: ${{ parameters.sshKeyPair }}
+  terraformDir: terraform-core
+  terraformBackend: 'tstatebucket01ohio'
+
+jobs:
+
+- job: terraform
+  displayName: Run Terraform
+  steps:
+
+  - powershell: |
+
+      Add-Content $(terraformDir)/terraform.tfvars "`n"
+      Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
+      Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
+
+      Add-Content $(terraformDir)/terraform.tfvars 'vpc_cidr = "11.0.0.0/16"'
+      Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
+
+      echo 'Reading Terraform Variables....'
+
+      Get-Content -Path $(terraformDir)/terraform.tfvars
+
+    name: setVariables
+    displayName: Setting Variables
+
+  - task: TerraformTaskV1@0
+    displayName: Terraform Init (AWS)
+    inputs:
+      provider: 'aws'
+      command: 'init'
+      region: 'us-east-2'
+      backendServiceAWS: '$(serviceArmAws)'
+      backendAWSBucketName: '$(terraformBackend)'
+      backendAWSKey: 'terraform.tfstate'
+      workingDirectory: '$(terraformDir)'
+
+  - task: TerraformTaskV1@0
+    displayName: Terraform Plan (AWS)
+    inputs:
+      provider: 'aws'
+      command: 'plan'
+      environmentServiceNameAWS: '$(serviceArmAws)'
+      workingDirectory: '$(terraformDir)'

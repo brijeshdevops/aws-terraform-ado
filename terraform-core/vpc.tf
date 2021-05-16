@@ -7,6 +7,7 @@ resource "aws_vpc" "demo" {
   }
 }
 
+<<<<<<< HEAD
 output "vpc_id" {
   value = aws_vpc.demo.id
 }
@@ -15,6 +16,8 @@ output "vpc_cidr" {
   value = aws_vpc.demo.cidr_block
 }
 
+=======
+>>>>>>> be3cedb... Initial Load
 resource "aws_subnet" "public_1" {
   vpc_id     = aws_vpc.demo.id
   cidr_block = cidrsubnet(aws_vpc.demo.cidr_block, 4, 0)
