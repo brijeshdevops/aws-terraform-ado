@@ -1,5 +1,5 @@
 trigger:
-- master
+- none
 
 pool:
   name: AWS
@@ -14,11 +14,11 @@ parameters:
 
 - name: serviceArmAws
   displayName: Select AWS Service Connection
-  default: aws-9154
+  default: aws-9154-terraform
   type: string
   values:
     - AWSDevOktaTerraform
-    - aws-9154
+    - aws-9154-terraform
 
 - name: region
   displayName: Select AWS Region
