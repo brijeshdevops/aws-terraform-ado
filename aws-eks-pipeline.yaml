@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  name: AWS
+  name: 'Azure Pipelines'
 #  vmImage: 'AWS'
 
 #variables:
