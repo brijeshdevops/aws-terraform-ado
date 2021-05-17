@@ -79,8 +79,11 @@ jobs:
   displayName: Run Terraform
   steps:
 
-#  - powershell: |
-#
+  - powershell: |
+
+      aws sts get-caller-identity
+      aws s3 ls
+
 #      Add-Content $(terraformDir)/terraform.tfvars "`n"
 #      Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
 #      Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
@@ -91,9 +94,9 @@ jobs:
 #      echo 'Reading Terraform Variables....'
 #
 #      Get-Content -Path $(terraformDir)/terraform.tfvars
-#
-#    name: setVariables
-#    displayName: Setting Variables
+
+    name: setVariables
+    displayName: Setting Variables
 
   - task: TerraformTaskV1@0
     displayName: Terraform Init (AWS)
