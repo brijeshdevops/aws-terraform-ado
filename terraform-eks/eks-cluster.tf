@@ -1,3 +1,7 @@
+locals {
+  cluster_name = "${var.project_id}-${var.env_type}-EKS-Cluster"
+}
+
 module "eks" {
   source       = "terraform-aws-modules/eks/aws"
   cluster_name = local.cluster_name
