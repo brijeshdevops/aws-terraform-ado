@@ -17,12 +17,13 @@
 //  }
 //}
 
-provider "aws" {
-  version = ">=2.0"
-  region  = var.cloud_region
-}
 
 terraform {
+
+  provider "aws" {
+    version = ">=2.0"
+    region  = var.cloud_region
+  }
 
   backend "s3" {
     bucket         = "innovalab-working-bucket"
