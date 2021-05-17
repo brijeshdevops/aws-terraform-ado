@@ -14,11 +14,12 @@ parameters:
 
 - name: serviceArmAws
   displayName: Select AWS Service Connection
-  default: aws-9154-terraform
+  default: aws-9154
   type: string
   values:
     - AWSDevOktaTerraform
     - aws-9154-terraform
+    - aws-9154
 
 - name: region
   displayName: Select AWS Region
