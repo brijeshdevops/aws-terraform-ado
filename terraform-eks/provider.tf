@@ -38,9 +38,6 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
-  assume_role {
-    role_arn     = "arn:aws:sts::763269149154:assumed-role/EC2InstanceRole/i-08a3a97beacf1f262"
-  }
 }
 
 provider "random" {
