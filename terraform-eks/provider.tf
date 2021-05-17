@@ -24,19 +24,31 @@ provider "kubernetes" {
   load_config_file       = false
 }
 
-provider "kubectl" {
-  apply_retry_count      = 15
-  host                   =              data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-  load_config_file       = false
+// This is for Terraform 0.12
+//provider "kubectl" {
+//  apply_retry_count      = 15
+//  host                   =              data.aws_eks_cluster.cluster.endpoint
+//  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+//  load_config_file       = false
+//
+//  exec {
+//    api_version = "client.authentication.k8s.io/v1alpha1"
+//    command     = "aws-iam-authenticator"
+//    args = [
+//      "token",
+//      "-i",
+//      local.cluster_id,
+//    ]
+//  }
+//}
 
-  exec {
-    api_version = "client.authentication.k8s.io/v1alpha1"
-    command     = "aws-iam-authenticator"
-    args = [
-      "token",
-      "-i",
-      local.cluster_id,
-    ]
+terraform {
+  required_version = ">= 0.13"
+
+  required_providers {
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.7.0"
+    }
   }
 }
