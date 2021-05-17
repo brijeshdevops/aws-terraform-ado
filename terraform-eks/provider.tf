@@ -21,11 +21,11 @@
 
 terraform {
 
-  backend "s3" {
-    bucket         = "innovalab-working-bucket"
-    key            = "terraform.tfstate"
-    region         = "us-east-1"
-  }
+//  backend "s3" {
+//    bucket         = "innovalab-working-bucket"
+//    key            = "terraform.tfstate"
+//    region         = "us-east-1"
+//  }
 
   required_providers {
 
