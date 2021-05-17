@@ -20,11 +20,6 @@
 
 terraform {
 
-  provider "aws" {
-    version = ">=2.0"
-    region  = var.cloud_region
-  }
-
   backend "s3" {
     bucket         = "innovalab-working-bucket"
     key            = "terraform.tfstate"
@@ -32,6 +27,12 @@ terraform {
   }
 
   required_providers {
+
+    provider "aws" {
+      version = ">=2.0"
+      region  = var.cloud_region
+    }
+
     kubectl = {
       source  = "gavinbunney/kubectl"
       version = ">= 1.7.0"
