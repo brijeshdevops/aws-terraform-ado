@@ -18,14 +18,9 @@
 //}
 
 
-
 terraform {
 
-//  backend "s3" {
-//    bucket         = "innovalab-working-bucket"
-//    key            = "terraform.tfstate"
-//    region         = "us-east-1"
-//  }
+  required_version = ">= 0.13"
 
   required_providers {
 
@@ -36,6 +31,23 @@ terraform {
   }
 
 }
+
+provider "random" {
+  version = "~> 2.1"
+}
+
+provider "local" {
+  version = "~> 1.2"
+}
+
+provider "null" {
+  version = "~> 2.1"
+}
+
+provider "template" {
+  version = "~> 2.1"
+}
+
 
 //provider "kubernetes" {
 //  host                   = data.aws_eks_cluster.cluster.endpoint
