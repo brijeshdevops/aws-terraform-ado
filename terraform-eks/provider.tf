@@ -1,8 +1,8 @@
-provider "aws" {
-  region  = "us-east-1"
-  //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
-  //profile                 = "opencloud"
-}
+//provider "aws" {
+//  region  = "us-east-1"
+//  //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
+//  //profile                 = "opencloud"
+//}
 
 // Disabled for Azure ADO
 //terraform {
@@ -18,8 +18,7 @@ provider "aws" {
 
 
 terraform {
-
-  required_version = ">= 0.13"
+//  required_version = ">= 0.13"
 
   required_providers {
 
@@ -35,6 +34,10 @@ terraform {
 
   }
 
+}
+
+provider "aws" {
+  region = "us-east-1"
 }
 
 provider "random" {
