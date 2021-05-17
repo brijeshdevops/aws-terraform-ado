@@ -19,10 +19,11 @@ variable "vpc_id" {
   default     = "vpc-03c8e6332bacf734d"
 }
 
-//variable "vpc_cidr" {
-//  type        = string
-//  description = "VPC CIDR"
-//}
+variable "vpc_cidr" {
+  type        = string
+  description = "VPC CIDR"
+  default     = "10.0.0.0/21"
+}
 //
 //variable "public_subnets" {
 //  type        = list(string)
