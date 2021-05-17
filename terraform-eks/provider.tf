@@ -25,7 +25,7 @@ provider "aws" {
 terraform {
 
   backend "s3" {
-    bucket         = "cf-templates-1n70pnlozst11-us-east-1"
+    bucket         = "innovalab-working-bucket"
     key            = "terraform.tfstate"
     region         = "us-east-1"
   }
