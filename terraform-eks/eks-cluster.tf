@@ -1,7 +1,3 @@
-locals {
-  cluster_name = "${var.project_id}-${var.env_type}-EKS-Cluster"
-}
-
 module "eks" {
   source       = "terraform-aws-modules/eks/aws"
   cluster_name = local.cluster_name
@@ -16,7 +12,8 @@ module "eks" {
   }
   # windows workaround
   #wait_for_cluster_interpreter = ["C:/Users/bprajapati/Desktop/2019/TOOLs/cygwin64/bin/sh.exe","-c"]
-  wait_for_cluster_cmd = "until curl -sk $ENDPOINT >/dev/null; do sleep 4; done"
+
+  #wait_for_cluster_cmd = "until curl -sk $ENDPOINT >/dev/null; do sleep 4; done"
   #wait_for_cluster_cmd = "${var.wait_for_cluster_cmd}" # "until wget --no-check-certificate -O - -q $ENDPOINT/healthz >/dev/null; do sleep 4; done"
 
   node_groups_defaults = {
@@ -51,6 +48,11 @@ module "eks" {
       }
     }
   }
+
+  depends_on = [
+        aws_iam_role.eks_service_role,
+        aws_iam_role.eks_ng_role
+  ]
 }
 
 data "aws_eks_cluster" "cluster" {
