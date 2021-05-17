@@ -111,5 +111,6 @@ jobs:
     inputs:
       provider: 'aws'
       command: 'plan'
+      region: '$(region)'
       environmentServiceNameAWS: '$(serviceArmAws)'
       workingDirectory: '$(terraformDir)'
