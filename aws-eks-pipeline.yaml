@@ -79,21 +79,21 @@ jobs:
   displayName: Run Terraform
   steps:
 
-  - powershell: |
-
-      Add-Content $(terraformDir)/terraform.tfvars "`n"
-      Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
-      Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
-
-      Add-Content $(terraformDir)/terraform.tfvars 'vpc_cidr = "11.0.0.0/16"'
-      Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
-
-      echo 'Reading Terraform Variables....'
-
-      Get-Content -Path $(terraformDir)/terraform.tfvars
-
-    name: setVariables
-    displayName: Setting Variables
+#  - powershell: |
+#
+#      Add-Content $(terraformDir)/terraform.tfvars "`n"
+#      Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
+#      Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
+#
+#      Add-Content $(terraformDir)/terraform.tfvars 'vpc_cidr = "11.0.0.0/16"'
+#      Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
+#
+#      echo 'Reading Terraform Variables....'
+#
+#      Get-Content -Path $(terraformDir)/terraform.tfvars
+#
+#    name: setVariables
+#    displayName: Setting Variables
 
   - task: TerraformTaskV1@0
     displayName: Terraform Init (AWS)
