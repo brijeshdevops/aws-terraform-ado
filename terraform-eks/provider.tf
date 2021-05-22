@@ -45,7 +45,7 @@ terraform {
 
 
 provider "aws" {
-  region  = var.cloud_region
+  region  = var.region
 //  //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
 //  //profile                 = "myAwsCliProfile"
 }
@@ -63,7 +63,7 @@ terraform {
     bucket         = "innovalab-working-bucket"
     key            = "terraform.tfstate"
     dynamodb_table = "terraform_lock"
-    region         = "us-east-1"
+    region         = var.region
     //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
     //profile                 = "opencloud"
   }
