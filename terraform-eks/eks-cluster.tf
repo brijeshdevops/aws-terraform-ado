@@ -34,14 +34,20 @@ module "eks" {
         aws_security_group.main_security_group.id,
         aws_security_group.worker_group_mgmt_one.id
       ]
+
       subnets = data.aws_subnet_ids.eks_subnets_private.ids
+
       additional_tags = {
-        Name = "${local.cluster_name}-NG-app"
+          Name = "${local.cluster_name}-NG-app"
+          Created_by = var.created_by
+          Purpose    = var.purpose
+          Project    = var.project_id
       }
+
       k8s_labels = {
-        NodeGroupName = "${local.cluster_name}-NG-app"
-        lifecycle     = "app-nodes"
-        intent        = "java-app"
+          NodeGroupName = "${local.cluster_name}-NG-app"
+          lifecycle     = "app-nodes"
+          intent        = "java-app"
       }
     }
 
