@@ -88,28 +88,29 @@ jobs:
       echo 'Reading Terraform Variables....'
       Get-Content -Path $(terraformDir)/terraform.tfvars
 
+      cd $(terraformDir)
       terraform init
       terraform plan -auto-approve
 
     name: setVariables
     displayName: Setting Variables
 
-  - task: TerraformTaskV1@0
-    displayName: Terraform Init (AWS)
-    inputs:
-      provider: 'aws'
-      command: 'init'
-      region: '$(region)'
-      backendServiceAWS: '$(serviceArmAws)'
-      backendAWSBucketName: '$(terraformBackend)'
-      backendAWSKey: 'terraform.tfstate'
-      workingDirectory: '$(terraformDir)'
-
-  - task: TerraformTaskV1@0
-    displayName: Terraform Plan (AWS)
-    inputs:
-      provider: 'aws'
-      command: 'plan'
-      region: '$(region)'
-      environmentServiceNameAWS: '$(serviceArmAws)'
-      workingDirectory: '$(terraformDir)'
+#  - task: TerraformTaskV1@0
+#    displayName: Terraform Init (AWS)
+#    inputs:
+#      provider: 'aws'
+#      command: 'init'
+#      region: '$(region)'
+#      backendServiceAWS: '$(serviceArmAws)'
+#      backendAWSBucketName: '$(terraformBackend)'
+#      backendAWSKey: 'terraform.tfstate'
+#      workingDirectory: '$(terraformDir)'
+#
+#  - task: TerraformTaskV1@0
+#    displayName: Terraform Plan (AWS)
+#    inputs:
+#      provider: 'aws'
+#      command: 'plan'
+#      region: '$(region)'
+#      environmentServiceNameAWS: '$(serviceArmAws)'
+#      workingDirectory: '$(terraformDir)'
