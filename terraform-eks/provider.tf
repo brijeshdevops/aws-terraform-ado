@@ -63,7 +63,7 @@ terraform {
     bucket         = "innovalab-working-bucket"
     key            = "terraform.tfstate"
     dynamodb_table = "terraform_lock"
-    region         = var.region
+    region         = "us-east-1"
     //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
     //profile                 = "opencloud"
   }
