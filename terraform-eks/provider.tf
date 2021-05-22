@@ -38,16 +38,16 @@ provider "aws" {
 }
 
 // Disabled for Azure ADO
-terraform {
-  backend "s3" {
-    bucket         = "innovalab-working-bucket"
-    key            = "terraform.tfstate"
-    dynamodb_table = "terraform_lock"
-    region         = "us-east-1"
-    //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
-    //profile                 = "opencloud"
-  }
-}
+//terraform {
+//  backend "s3" {
+//    bucket         = "innovalab-working-bucket"
+//    key            = "terraform.tfstate"
+//    dynamodb_table = "terraform_lock"
+//    region         = "us-east-1"
+//    //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
+//    //profile                 = "opencloud"
+//  }
+//}
 
 locals {
   cluster_name = "${var.project_id}-${var.env_type}-EKS-Cluster"
