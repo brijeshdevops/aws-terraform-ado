@@ -77,7 +77,9 @@ jobs:
 
   - powershell: |
       aws sts get-caller-identity
-      aws s3 ls
+      pwd
+      ls
+
       Add-Content $(terraformDir)/terraform.tfvars "`n"
       Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
       Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
