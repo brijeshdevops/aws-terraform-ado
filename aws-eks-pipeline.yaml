@@ -79,7 +79,6 @@ jobs:
       aws sts get-caller-identity
       pwd
       ls
-
       Add-Content $(terraformDir)/terraform.tfvars "`n"
       Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
       Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
@@ -87,13 +86,20 @@ jobs:
       Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
       echo 'Reading Terraform Variables....'
       Get-Content -Path $(terraformDir)/terraform.tfvars
-
-      cd $(terraformDir)
-      terraform init
-      terraform plan -auto-approve
-
     name: setVariables
     displayName: Setting Variables
+
+  - powershell: |
+      cd $(terraformDir)
+      terraform init
+    name: terraformInit
+    displayName: Terraform Init
+
+  - powershell: |
+      cd $(terraformDir)
+      terraform plan
+    name: terraformPlan
+    displayName: Terraform Plan
 
 #  - task: TerraformTaskV1@0
 #    displayName: Terraform Init (AWS)
