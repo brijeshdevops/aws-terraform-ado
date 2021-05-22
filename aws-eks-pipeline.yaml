@@ -85,6 +85,10 @@ jobs:
       Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
       echo 'Reading Terraform Variables....'
       Get-Content -Path $(terraformDir)/terraform.tfvars
+
+      terraform init
+      terraform plan -auto-approve
+
     name: setVariables
     displayName: Setting Variables
 
