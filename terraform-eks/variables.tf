@@ -47,7 +47,7 @@ variable "node_ssh_key" {
 variable "eks_version" {
   type        = string
   description = "EKS Version Number"
-  default     = "1.16"
+  default     = "1.20"
 }
 
 variable "eks_intance_type_main" {

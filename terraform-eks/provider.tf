@@ -1,14 +1,36 @@
-
 terraform {
+
+  required_version = "~> 0.14"
+  
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.27"
+      version = ">= 3.20.0"
     }
 
     random = {
       source  = "hashicorp/random"
       version = "3.0.0"
+    }
+
+    local = {
+      source  = "hashicorp/local"
+      version = "2.0.0"
+    }
+
+    null = {
+      source  = "hashicorp/null"
+      version = "3.0.0"
+    }
+
+    template = {
+      source  = "hashicorp/template"
+      version = "2.2.0"
+    }
+
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.1"
     }
 
     kubectl = {
@@ -18,16 +40,16 @@ terraform {
 
   }
 
-  required_version = ">= 0.14.9"
+
 }
+
 
 provider "aws" {
   region  = var.cloud_region
+//  //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
+//  //profile                 = "myAwsCliProfile"
 }
 
-provider "local" {
-  version = "~> 1.2"
-}
 
 
 //provider "aws" {
@@ -51,13 +73,13 @@ locals {
   cluster_name = "${var.project_id}-${var.env_type}-EKS-Cluster"
 }
 
-provider "kubernetes" {
-  host                   = element(concat(data.aws_eks_cluster.cluster[*].endpoint, [""]), 0)
-  cluster_ca_certificate = base64decode(element(concat(data.aws_eks_cluster.cluster[*].certificate_authority.0.data, [""]), 0))
-  token                  = element(concat(data.aws_eks_cluster_auth.cluster[*].token, [""]), 0)
-  load_config_file       = false
-  version                = "1.10"
-}
+//provider "kubernetes" {
+//  host                   = element(concat(data.aws_eks_cluster.cluster[*].endpoint, [""]), 0)
+//  cluster_ca_certificate = base64decode(element(concat(data.aws_eks_cluster.cluster[*].certificate_authority.0.data, [""]), 0))
+//  token                  = element(concat(data.aws_eks_cluster_auth.cluster[*].token, [""]), 0)
+//  load_config_file       = false
+//  version                = "1.10"
+//}
 
 //provider "kubernetes" {
 //  host                   = data.aws_eks_cluster.cluster.endpoint
