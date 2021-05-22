@@ -12,9 +12,9 @@ pool:
 
 parameters:
 
-- name: serviceArmAws
-  displayName: Select AWS Service Connection
-  type: string
+#- name: serviceArmAws
+#  displayName: Select AWS Service Connection
+#  type: string
 
 - name: region
   displayName: Select AWS Region
@@ -26,6 +26,7 @@ parameters:
 
 - name: terraformBackend
   displayName: Terraform Backend S3 Bucket
+  default: lab-working-bucket
   type: string
 
 - name: projectName
@@ -35,6 +36,7 @@ parameters:
 
 - name: vpcId
   displayName: Enter exiting VPC ID
+  default: vpc-03c8e6332bacf
   type: string
 
 - name: envType
@@ -61,7 +63,7 @@ parameters:
 
 variables:
   projectName: ${{ parameters.projectName }}
-  serviceArmAws: ${{ parameters.serviceArmAws }}
+#  serviceArmAws: ${{ parameters.serviceArmAws }}
   envType: ${{ parameters.envType }}
   sshKeyPair: ${{ parameters.sshKeyPair }}
   terraformDir: terraform-eks
@@ -100,6 +102,12 @@ jobs:
       terraform plan
     name: terraformPlan
     displayName: Terraform Plan
+
+  - powershell: |
+      cd $(terraformDir)
+      terraform apply -auto-approve
+    name: terraformApply
+    displayName: Terraform Apply
 
 #  - task: TerraformTaskV1@0
 #    displayName: Terraform Init (AWS)
