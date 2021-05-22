@@ -1,41 +1,52 @@
+//
+//terraform {
+//  required_version = ">= 0.14"
+//  //  required_version = ">= 0.12"
+//  required_providers {
+//    aws = {
+//      source  = "hashicorp/aws"
+//      version = "~> 3.0"
+//    }
+//    kubectl = {
+//      source  = "gavinbunney/kubectl"
+//      version = ">= 1.7.0"
+//    }
+//  }
+//
+//}
 
 terraform {
-  required_version = ">= 0.14"
-  //  required_version = ">= 0.12"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 3.27"
     }
+
+    random = {
+      source  = "hashicorp/random"
+      version = "3.0.0"
+    }
+
     kubectl = {
       source  = "gavinbunney/kubectl"
       version = ">= 1.7.0"
     }
+
   }
 
-}
-
-provider "random" {
-  version = "~> 2.1"
+  required_version = ">= 0.14.9"
 }
 
 provider "local" {
   version = "~> 1.2"
 }
 
-provider "null" {
-  version = "~> 2.1"
-}
 
-provider "template" {
-  version = "~> 2.1"
-}
-
-provider "aws" {
-  region = "us-east-1"
-  //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
-  //profile                 = "opencloud"
-}
+//provider "aws" {
+//  region = "us-east-1"
+//  //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
+//  //profile                 = "opencloud"
+//}
 
 // Disabled for Azure ADO
 //terraform {
