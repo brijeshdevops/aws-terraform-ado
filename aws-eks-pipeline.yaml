@@ -109,11 +109,11 @@ jobs:
     name: terraformApply
     displayName: Terraform Apply
 
-  - powershell: |
-      cd $(terraformDir)
-      terraform destroy -auto-approve
-    name: terraformDestroy
-    displayName: Terraform Destroy
+#  - powershell: |
+#      cd $(terraformDir)
+#      terraform destroy -auto-approve
+#    name: terraformDestroy
+#    displayName: Terraform Destroy
 
 #  - task: TerraformTaskV1@0
 #    displayName: Terraform Init (AWS)
