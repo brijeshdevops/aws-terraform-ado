@@ -1,5 +1,5 @@
 trigger:
-- master
+- none
 
 pool:
   name: AWS
@@ -14,11 +14,7 @@ parameters:
 
 - name: serviceArmAws
   displayName: Select AWS Service Connection
-  default: aws-9154-terraform
   type: string
-  values:
-    - AWSDevOktaTerraform
-    - aws-9154-terraform
 
 - name: region
   displayName: Select AWS Region
@@ -30,16 +26,15 @@ parameters:
 
 - name: terraformBackend
   displayName: Terraform Backend S3 Bucket
-  default: innovalab-working-bucket
   type: string
-  values:
-    - innovalab-working-bucket
-    - tstatebucket01ohio
-
 
 - name: projectName
   displayName: Enter Project Name
-  default: poc1
+  default: javaapp1
+  type: string
+
+- name: vpcId
+  displayName: Enter exiting VPC ID
   type: string
 
 - name: envType
@@ -53,7 +48,7 @@ parameters:
 
 - name: sshKeyPair
   displayName: Enter existing SSH Key Pair Name
-  default: devoktakeyohio
+  default: eks-9154
   type: string
 
 - name: destroyResource
@@ -72,6 +67,7 @@ variables:
   terraformDir: terraform-eks
   terraformBackend: ${{ parameters.terraformBackend }}
   region: ${{ parameters.region }}
+  vpcId: ${{ parameters.vpcId }}
 
 jobs:
 
@@ -80,21 +76,15 @@ jobs:
   steps:
 
   - powershell: |
-
       aws sts get-caller-identity
       aws s3 ls
-
-#      Add-Content $(terraformDir)/terraform.tfvars "`n"
-#      Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
-#      Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
-#
-#      Add-Content $(terraformDir)/terraform.tfvars 'vpc_cidr = "11.0.0.0/16"'
-#      Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
-#
-#      echo 'Reading Terraform Variables....'
-#
-#      Get-Content -Path $(terraformDir)/terraform.tfvars
-
+      Add-Content $(terraformDir)/terraform.tfvars "`n"
+      Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
+      Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
+      Add-Content $(terraformDir)/terraform.tfvars 'vpc_id = "$(vpcId)"'
+      Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
+      echo 'Reading Terraform Variables....'
+      Get-Content -Path $(terraformDir)/terraform.tfvars
     name: setVariables
     displayName: Setting Variables
 

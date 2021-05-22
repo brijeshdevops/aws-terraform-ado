@@ -30,6 +30,13 @@ resource "aws_iam_role" "eks_ng_role" {
     ]
     Version = "2012-10-17"
   })
+
+  tags = {
+    Project    = var.project_id
+    Created_By = var.created_by
+    Purpose    = var.purpose
+  }
+
 }
 
 resource "aws_iam_role_policy_attachment" "policy-AmazonEKSWorkerNodePolicy" {
@@ -104,6 +111,13 @@ resource "aws_iam_role" "eks_service_role" {
     ]
     Version = "2012-10-17"
   })
+
+  tags = {
+    Project    = var.project_id
+    Created_By = var.created_by
+    Purpose    = var.purpose
+  }
+
 }
 
 resource "aws_iam_role_policy_attachment" "service-policy-Cluster" {

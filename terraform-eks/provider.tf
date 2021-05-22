@@ -1,7 +1,7 @@
 
 terraform {
-  required_version = ">= 0.13"
-//  required_version = ">= 0.12"
+  required_version = ">= 0.14"
+  //  required_version = ">= 0.12"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -32,7 +32,7 @@ provider "template" {
 }
 
 provider "aws" {
-  region  = "us-east-1"
+  region = "us-east-1"
   //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
   //profile                 = "opencloud"
 }
@@ -67,8 +67,8 @@ provider "kubernetes" {
   }
 
   # Required in v 0.12
-//  token                  = data.aws_eks_cluster_auth.cluster.token
-//  load_config_file       = false
+  //  token                  = data.aws_eks_cluster_auth.cluster.token
+  //  load_config_file       = false
 }
 
 // This is for Terraform 0.12
