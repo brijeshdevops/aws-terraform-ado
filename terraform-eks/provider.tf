@@ -37,6 +37,10 @@ terraform {
   required_version = ">= 0.14.9"
 }
 
+provider "aws" {
+  region  = var.cloud_region
+}
+
 provider "local" {
   version = "~> 1.2"
 }
