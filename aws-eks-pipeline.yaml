@@ -81,7 +81,6 @@ jobs:
       aws sts get-caller-identity
       pwd
       ls
-      cd $(terraformDir)
       Add-Content $(terraformDir)/terraform.tfvars "`n"
       Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
       Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
@@ -90,6 +89,10 @@ jobs:
       echo 'Reading Terraform Variables....'
       pwd
       Get-Content -Path $(terraformDir)/terraform.tfvars
+
+      cd $(terraformDir)
+      ls
+      
     name: setVariables
     displayName: Setting Variables
 
