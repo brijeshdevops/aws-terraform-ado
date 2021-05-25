@@ -79,20 +79,18 @@ jobs:
 
   - powershell: |
       aws sts get-caller-identity
-      pwd
-      ls
+
       Add-Content $(terraformDir)/terraform.tfvars "`n"
       Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
       Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
       Add-Content $(terraformDir)/terraform.tfvars 'vpc_id = "$(vpcId)"'
       Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
       echo 'Reading Terraform Variables....'
-      pwd
       Get-Content -Path $(terraformDir)/terraform.tfvars
 
       cd $(terraformDir)
       ls
-      
+
     name: setVariables
     displayName: Setting Variables
 
@@ -108,18 +106,18 @@ jobs:
     name: terraformPlan
     displayName: Terraform Plan
 
-  - powershell: |
-      cd $(terraformDir)
-      terraform apply -auto-approve
-    name: terraformApply
-    displayName: Terraform Apply
-
-  - powershell: |
-      cd $(terraformDir)
-      terraform destroy -auto-approve
-    name: terraformDestroy
-    displayName: Terraform Destroy
-    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', true))
+#  - powershell: |
+#      cd $(terraformDir)
+#      terraform apply -auto-approve
+#    name: terraformApply
+#    displayName: Terraform Apply
+#
+#  - powershell: |
+#      cd $(terraformDir)
+#      terraform destroy -auto-approve
+#    name: terraformDestroy
+#    displayName: Terraform Destroy
+#    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', true))
 
 
 #  - powershell: |
