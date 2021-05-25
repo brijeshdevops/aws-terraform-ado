@@ -81,6 +81,7 @@ jobs:
       aws sts get-caller-identity
       pwd
       ls
+      cd $(terraformDir)
       Add-Content $(terraformDir)/terraform.tfvars "`n"
       Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
       Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
