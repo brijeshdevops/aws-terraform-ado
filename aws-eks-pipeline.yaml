@@ -88,6 +88,7 @@ jobs:
       Add-Content $(terraformDir)/terraform.tfvars 'vpc_id = "$(vpcId)"'
       Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
       echo 'Reading Terraform Variables....'
+      pwd
       Get-Content -Path $(terraformDir)/terraform.tfvars
     name: setVariables
     displayName: Setting Variables
