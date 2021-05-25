@@ -71,7 +71,7 @@ variable "eks_cluster_ng_min" {
 variable "eks_cluster_ng_desire" {
   type        = number
   description = "EKS Cluster Node Groups Desired size"
-  default     = 2
+  default     = 1
 }
 
 variable "wait_for_cluster_cmd" {
