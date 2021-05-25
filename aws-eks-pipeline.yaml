@@ -109,6 +109,14 @@ jobs:
     name: terraformApply
     displayName: Terraform Apply
 
+  - powershell: |
+      cd $(terraformDir)
+      terraform destroy -auto-approve
+    name: terraformApply
+    displayName: Terraform Destroy
+    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', true))
+
+
 #  - powershell: |
 #      cd $(terraformDir)
 #      terraform destroy -auto-approve

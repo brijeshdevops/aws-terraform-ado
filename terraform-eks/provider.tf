@@ -40,7 +40,6 @@ terraform {
 
   }
 
-
 }
 
 
@@ -50,13 +49,6 @@ provider "aws" {
 //  //profile                 = "myAwsCliProfile"
 }
 
-
-
-//provider "aws" {
-//  region = "us-east-1"
-//  //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
-//  //profile                 = "opencloud"
-//}
 
 terraform {
   backend "s3" {
