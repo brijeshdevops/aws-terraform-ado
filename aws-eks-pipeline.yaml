@@ -110,7 +110,7 @@ jobs:
       cd $(terraformDir)
       terraform apply -auto-approve -var 'project_id="$(projectName)"' -var 'env_type="$(envType)"' -var 'vpc_id="$(vpcId)"' -var 'node_ssh_key="$(sshKeyPair)"'
     name: terraformApply
-    displayName: Terraform Plan
+    displayName: Terraform Apply
 
 
   - powershell: |
