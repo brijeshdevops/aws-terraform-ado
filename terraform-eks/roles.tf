@@ -1,4 +1,7 @@
 # EKS Node Group Role
+locals {
+  cluster_name = "${var.project_id}-${var.env_type}-EKS-Cluster"
+}
 
 resource "aws_iam_role" "eks_ng_role" {
 

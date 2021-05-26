@@ -31,12 +31,12 @@ parameters:
 
 - name: projectName
   displayName: Enter Project Name
-  default: javaapp1
+  default: monitoring
   type: string
 
 - name: vpcId
   displayName: Enter exiting VPC ID
-  default: vpc-03c8e6332bacf
+  default: vpc-03c8e6332bacf734d
   type: string
 
 - name: envType
