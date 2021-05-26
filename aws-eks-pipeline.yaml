@@ -102,7 +102,7 @@ jobs:
 
   - powershell: |
       cd $(terraformDir)
-      terraform plan -var 'project_name = "$(projectName)"' -var 'env_type = "$(envType)"' -var 'vpc_id = "$(vpcId)"' -var 'node_ssh_key = "$(sshKeyPair)"'
+      terraform plan -var 'project_id="$(projectName)"' -var 'env_type="$(envType)"' -var 'vpc_id="$(vpcId)"' -var 'node_ssh_key="$(sshKeyPair)"'
     name: terraformPlan
     displayName: Terraform Plan
 
