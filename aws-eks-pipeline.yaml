@@ -106,18 +106,19 @@ jobs:
     name: terraformPlan
     displayName: Terraform Plan
 
-#  - powershell: |
-#      cd $(terraformDir)
-#      terraform apply -auto-approve
-#    name: terraformApply
-#    displayName: Terraform Apply
-#
-#  - powershell: |
-#      cd $(terraformDir)
-#      terraform destroy -auto-approve
-#    name: terraformDestroy
-#    displayName: Terraform Destroy
-#    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', true))
+  - powershell: |
+      cd $(terraformDir)
+      terraform apply -auto-approve -var 'project_id="$(projectName)"' -var 'env_type="$(envType)"' -var 'vpc_id="$(vpcId)"' -var 'node_ssh_key="$(sshKeyPair)"'
+    name: terraformApply
+    displayName: Terraform Plan
+
+
+  - powershell: |
+      cd $(terraformDir)
+      terraform destroy -auto-approve -var 'project_id="$(projectName)"' -var 'env_type="$(envType)"' -var 'vpc_id="$(vpcId)"' -var 'node_ssh_key="$(sshKeyPair)"'
+    name: terraformDestroy
+    displayName: Terraform Destroy
+    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', true))
 
 
 #  - powershell: |
