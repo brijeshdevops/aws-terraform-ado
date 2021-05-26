@@ -96,12 +96,14 @@ jobs:
 
   - powershell: |
       cd $(terraformDir)
+      Get-Content -Path $(terraformDir)/terraform.tfvars
       terraform init
     name: terraformInit
     displayName: Terraform Init
 
   - powershell: |
       cd $(terraformDir)
+      Get-Content -Path $(terraformDir)/terraform.tfvars
       terraform plan
     name: terraformPlan
     displayName: Terraform Plan
