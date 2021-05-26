@@ -77,34 +77,32 @@ jobs:
   displayName: Run Terraform
   steps:
 
+#  - powershell: |
+#      aws sts get-caller-identity
+#
+#      Add-Content $(terraformDir)/terraform.tfvars "`n"
+#      Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
+#      Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
+#      Add-Content $(terraformDir)/terraform.tfvars 'vpc_id = "$(vpcId)"'
+#      Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
+#      echo 'Reading Terraform Variables....'
+#      Get-Content -Path $(terraformDir)/terraform.tfvars
+#
+#      cd $(terraformDir)
+#      ls
+#
+#    name: setVariables
+#    displayName: Setting Variables
+
   - powershell: |
-      aws sts get-caller-identity
-
-      Add-Content $(terraformDir)/terraform.tfvars "`n"
-      Add-Content $(terraformDir)/terraform.tfvars 'project_name = "$(projectName)"'
-      Add-Content $(terraformDir)/terraform.tfvars 'env_type = "$(envType)"'
-      Add-Content $(terraformDir)/terraform.tfvars 'vpc_id = "$(vpcId)"'
-      Add-Content $(terraformDir)/terraform.tfvars 'node_ssh_key = "$(sshKeyPair)"'
-      echo 'Reading Terraform Variables....'
-      Get-Content -Path $(terraformDir)/terraform.tfvars
-
       cd $(terraformDir)
-      ls
-
-    name: setVariables
-    displayName: Setting Variables
-
-  - powershell: |
-      cd $(terraformDir)
-      Get-Content -Path $(terraformDir)/terraform.tfvars
       terraform init
     name: terraformInit
     displayName: Terraform Init
 
   - powershell: |
       cd $(terraformDir)
-      Get-Content -Path $(terraformDir)/terraform.tfvars
-      terraform plan
+      terraform plan -var 'project_name = "$(projectName)"' -var 'env_type = "$(envType)"' -var 'vpc_id = "$(vpcId)"' -var 'node_ssh_key = "$(sshKeyPair)"'
     name: terraformPlan
     displayName: Terraform Plan
 
