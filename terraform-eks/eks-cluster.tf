@@ -6,72 +6,93 @@ data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_id
 }
 
-# Kubernetes provider
-# https://learn.hashicorp.com/terraform/kubernetes/provision-eks-cluster#optional-configure-terraform-kubernetes-provider
-# To learn how to schedule deployments and services using the provider, go here: https://learn.hashicorp.com/terraform/kubernetes/deploy-nginx-kubernetes
-
-# The Kubernetes provider is included in this file so the EKS module can complete successfully. Otherwise, it throws an error when creating `kubernetes_config_map.aws_auth`.
-# You should **not** schedule deployments and services in this workspace. This keeps workspaces modular (one for provision EKS, another for scheduling Kubernetes resources) as per best practices.
-
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
-  token                  = data.aws_eks_cluster_auth.cluster.token
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+  exec {
+    api_version = "client.authentication.k8s.io/v1alpha1"
+    command     = "aws"
+    args = [
+      "eks",
+      "get-token",
+      "--cluster-name",
+      data.aws_eks_cluster.cluster.name
+    ]
+  }
+}
+
+data "terraform_remote_state" "eks" {
+  backend = "local"
+
+  config = {
+    path = "../learn-terraform-provision-eks-cluster/terraform.tfstate"
+  }
 }
 
 module "eks" {
   source                       = "terraform-aws-modules/eks/aws"
   cluster_name                 = local.cluster_name
-  subnets                      = data.aws_subnet_ids.eks_subnets.ids
+  subnets                      = data.aws_subnet_ids.eks_subnets_private.ids  # data.aws_subnet_ids.eks_subnets.ids
   #subnets                      = module.vpc.private_subnets
   cluster_version              = var.eks_version
   vpc_id                       = var.vpc_id
   cluster_iam_role_name        = aws_iam_role.eks_service_role.name
-  manage_cluster_iam_resources = false
 
+//  manage_cluster_iam_resources = false
+
+  worker_groups = [
+   {
+      name                          = "${local.cluster_name}-NG-1"
+      instance_type                 = "t2.medium"
+      additional_userdata           = "echo foo bar"
+      asg_desired_capacity          = 2
+      additional_security_group_ids = [aws_security_group.main_security_group.id]
+   }
+  ]
   # windows workaround
   #wait_for_cluster_interpreter = ["C:/Users/bprajapati/Desktop/2019/TOOLs/cygwin64/bin/sh.exe","-c"]
   #wait_for_cluster_cmd = "until curl -sk $ENDPOINT >/dev/null; do sleep 4; done"
   #wait_for_cluster_cmd = "${var.wait_for_cluster_cmd}" # "until wget --no-check-certificate -O - -q $ENDPOINT/healthz >/dev/null; do sleep 4; done"
 
-  node_groups_defaults = {
-    ami_type  = "AL2_x86_64"
-    disk_size = 50
-  }
-
-  node_groups = {
-
-    node_group_one = {
-      //name             = "${local.cluster_name}-NG-app"
-      ami_type         = "AL2_x86_64"
-      disk_size        = 50
-      desired_capacity = var.eks_cluster_ng_desire
-      max_capacity     = var.eks_cluster_ng_max
-      min_capacity     = var.eks_cluster_ng_min
-      iam_role_arn     = aws_iam_role.eks_ng_role.arn
-      instance_type    = var.eks_intance_type_main
-      key_name         = var.node_ssh_key
-      source_security_group_ids = [
-        aws_security_group.main_security_group.id
-      ]
-
-      subnets = data.aws_subnet_ids.eks_subnets_private.ids
-
-      additional_tags = {
-          Name = "${local.cluster_name}-NG-app"
-          Created_by = var.created_by
-          Purpose    = var.purpose
-          Project    = var.project_id
-      }
-
-      k8s_labels = {
-          NodeGroupName = "${local.cluster_name}-NG-app"
-          lifecycle     = "app-nodes"
-          intent        = "java-app"
-      }
-    }
-
-  }
+//
+//  node_groups_defaults = {
+//    ami_type  = "AL2_x86_64"
+//    disk_size = 50
+//  }
+//
+//  node_groups = {
+//
+//    node_group_one = {
+//      //name             = "${local.cluster_name}-NG-app"
+//      ami_type         = "AL2_x86_64"
+//      disk_size        = 50
+//      desired_capacity = var.eks_cluster_ng_desire
+//      max_capacity     = var.eks_cluster_ng_max
+//      min_capacity     = var.eks_cluster_ng_min
+//      iam_role_arn     = aws_iam_role.eks_ng_role.arn
+//      instance_type    = var.eks_intance_type_main
+//      key_name         = var.node_ssh_key
+//      source_security_group_ids = [
+//        aws_security_group.main_security_group.id
+//      ]
+//
+//      subnets = data.aws_subnet_ids.eks_subnets_private.ids
+//
+//      additional_tags = {
+//          Name = "${local.cluster_name}-NG-app"
+//          Created_by = var.created_by
+//          Purpose    = var.purpose
+//          Project    = var.project_id
+//      }
+//
+//      k8s_labels = {
+//          NodeGroupName = "${local.cluster_name}-NG-app"
+//          lifecycle     = "app-nodes"
+//          intent        = "java-app"
+//      }
+//    }
+//
+//  }
 
   tags = {
     Project    = var.project_id
