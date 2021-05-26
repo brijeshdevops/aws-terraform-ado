@@ -1,57 +1,49 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 3.20.0"
+    }
+
+    random = {
+      source  = "hashicorp/random"
+      version = "3.0.0"
+    }
+
+    local = {
+      source  = "hashicorp/local"
+      version = "2.0.0"
+    }
+
+    null = {
+      source  = "hashicorp/null"
+      version = "3.0.0"
+    }
+
+    template = {
+      source  = "hashicorp/template"
+      version = "2.2.0"
+    }
+
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.1"
+    }
+  }
+
+  required_version = "~> 0.14"
+}
+
 //terraform {
-//
-//  required_version = "~> 0.14"
+//  required_version = ">= 0.13.1"
 //
 //  required_providers {
-//    aws = {
-//      source  = "hashicorp/aws"
-//      version = ">= 3.20.0"
-//    }
-//
-//    random = {
-//      source  = "hashicorp/random"
-//      version = "3.0.0"
-//    }
-//
-//    local = {
-//      source  = "hashicorp/local"
-//      version = "2.0.0"
-//    }
-//
-//    null = {
-//      source  = "hashicorp/null"
-//      version = "3.0.0"
-//    }
-//
-//    template = {
-//      source  = "hashicorp/template"
-//      version = "2.2.0"
-//    }
-//
-//    kubernetes = {
-//      source  = "hashicorp/kubernetes"
-//      version = ">= 2.0.1"
-//    }
-//
-//    kubectl = {
-//      source  = "gavinbunney/kubectl"
-//      version = ">= 1.7.0"
-//    }
-//
+//    aws        = ">= 3.22.0"
+//    local      = ">= 1.4"
+//    random     = ">= 2.1"
+//    kubernetes = "~> 1.11"
 //  }
-//
 //}
-
-terraform {
-  required_version = ">= 0.13.1"
-
-  required_providers {
-    aws        = ">= 3.22.0"
-    local      = ">= 1.4"
-    random     = ">= 2.1"
-    kubernetes = "~> 1.11"
-  }
-}
 
 provider "aws" {
   region  = var.region
