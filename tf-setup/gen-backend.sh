@@ -11,7 +11,13 @@ else
     rm -f $of $of
 fi
 
+echo "We are at : "
+pwd
 sudo mkdir -p generated && sudo chmod 777 -R generated
+echo "We are at : "
+pwd
+echo "We have below files : "
+ls
 
 #default=["net","iam","c9net","cluster","nodeg","cicd","eks-cidr"]
 SECTIONS=('net' 'iam' 'c9net' 'cicd' 'cluster' 'nodeg' 'eks-cidr' 'sampleapp')
