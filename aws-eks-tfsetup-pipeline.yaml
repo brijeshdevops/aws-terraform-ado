@@ -61,12 +61,12 @@ jobs:
     name: terraformPlan
     displayName: Terraform Plan
 
-#  - powershell: |
-#      cd $(terraformDir)
-#      terraform apply -auto-approve   -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
-#    name: terraformApply
-#    displayName: Terraform Apply
-#
+  - powershell: |
+      cd $(terraformDir)
+      terraform apply -auto-approve   -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
+    name: terraformApply
+    displayName: Terraform Apply
+
 
   - powershell: |
       cd $(terraformDir)
