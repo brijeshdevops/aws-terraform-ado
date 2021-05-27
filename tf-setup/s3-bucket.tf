@@ -11,10 +11,7 @@ resource "aws_s3_bucket" "terraform_state" {
   bucket = data.external.bucket_name.result.Name
 
   acl                     = "private"
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
+
 
   // This is only here so we can destroy the bucket as part of automated tests. You should not copy this for production
   // usage
@@ -43,4 +40,14 @@ resource "aws_s3_bucket" "terraform_state" {
       Project      = var.cluster-name
   }
 
+}
+
+resource "aws_s3_bucket_public_access_block" "terraform_state" {
+  bucket = aws_s3_bucket.terraform_state.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+  
 }
