@@ -40,7 +40,7 @@ parameters:
 variables:
   clusterName: ${{ parameters.clusterName }}
 #  serviceArmAws: ${{ parameters.serviceArmAws }}
-  terraformDir: terraform-eks
+  terraformDir: tf-setup
   region: ${{ parameters.region }}
 
 jobs:
