@@ -10,4 +10,3 @@ variable "cluster-name" {
   type        = string
   default     = "mycluster1"
 }
- 
