@@ -11,7 +11,7 @@ else
     rm -f $of $of
 fi
 
-sudo mkdir -p generated
+sudo mkdir -p generated && sudo chmod 777 -R generated
 
 #default=["net","iam","c9net","cluster","nodeg","cicd","eks-cidr"]
 SECTIONS=('net' 'iam' 'c9net' 'cicd' 'cluster' 'nodeg' 'eks-cidr' 'sampleapp')
