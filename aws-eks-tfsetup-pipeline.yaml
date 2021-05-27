@@ -72,6 +72,8 @@ jobs:
 
   - powershell: |
       cd $(terraformDir)
+      pwd
+      ls
       sudo chmod 777 -R *
       terraform destroy -auto-approve -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
     name: terraformDestroy
