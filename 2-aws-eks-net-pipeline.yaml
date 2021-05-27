@@ -1,0 +1,104 @@
+trigger:
+- none
+
+pool:
+  name: awsdevokta
+#  vmImage: 'AWS'
+
+#variables:
+#  - template: config.yaml
+#  - template: variables.yaml
+#  - template: common-variables.yaml
+
+parameters:
+
+#- name: serviceArmAws
+#  displayName: Select AWS Service Connection
+#  type: string
+
+- name: region
+  displayName: Select AWS Region
+  default: us-east-1
+  type: string
+  values:
+    - us-east-1
+    - us-east-2
+
+- name: clusterName
+  displayName: Enter Cluster Name
+  default: monitoring
+  type: string
+
+- name: destroyResource
+  displayName: Do you want to destroy the resources?
+  default: false
+  type: boolean
+  values:
+    - true
+    - false
+
+variables:
+  clusterName: ${{ parameters.clusterName }}
+#  serviceArmAws: ${{ parameters.serviceArmAws }}
+  terraformDir: net
+  region: ${{ parameters.region }}
+
+jobs:
+
+- job: terraform
+  displayName: Run Terraform
+  steps:
+
+  - powershell: |
+      cd $(terraformDir)
+      terraform init
+    name: terraformInit
+    displayName: Terraform Init
+
+  - powershell: |
+      cd $(terraformDir)
+      terraform plan -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
+    name: terraformPlan
+    displayName: Terraform Plan
+
+  - powershell: |
+      cd $(terraformDir)
+      sudo chmod 777 -R *
+      terraform apply -auto-approve   -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
+    name: terraformApply
+    displayName: Terraform Apply
+
+
+  - powershell: |
+      cd $(terraformDir)
+      terraform destroy -auto-approve -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
+    name: terraformDestroy
+    displayName: Terraform Destroy
+    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', true))
+
+
+#  - powershell: |
+#      cd $(terraformDir)
+#      terraform destroy -auto-approve
+#    name: terraformDestroy
+#    displayName: Terraform Destroy
+
+#  - task: TerraformTaskV1@0
+#    displayName: Terraform Init (AWS)
+#    inputs:
+#      provider: 'aws'
+#      command: 'init'
+#      region: '$(region)'
+#      backendServiceAWS: '$(serviceArmAws)'
+#      backendAWSBucketName: '$(terraformBackend)'
+#      backendAWSKey: 'terraform.tfstate'
+#      workingDirectory: '$(terraformDir)'
+#
+#  - task: TerraformTaskV1@0
+#    displayName: Terraform Plan (AWS)
+#    inputs:
+#      provider: 'aws'
+#      command: 'plan'
+#      region: '$(region)'
+#      environmentServiceNameAWS: '$(serviceArmAws)'
+#      workingDirectory: '$(terraformDir)'
