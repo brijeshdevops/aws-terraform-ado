@@ -40,7 +40,7 @@ resource "aws_s3_bucket" "terraform_state" {
   }
 
   tags = {
-      Project      = var.cluster_name
+      Project      = var.cluster-name
   }
 
 }
