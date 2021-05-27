@@ -67,6 +67,7 @@ jobs:
       terraform apply -auto-approve   -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
     name: terraformApply
     displayName: Terraform Apply
+    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', false))
 
 
   - powershell: |
