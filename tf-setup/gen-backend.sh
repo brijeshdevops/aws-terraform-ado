@@ -1,5 +1,5 @@
 #!/bin/bash
-cp dot-terraform.rc $HOME/.terraformrc
+sudo cp dot-terraform.rc $HOME/.terraformrc
 d=`pwd`
 sleep 5
 reg=`terraform output -json region | jq -r .[]`
@@ -11,7 +11,7 @@ else
     rm -f $of $of
 fi
 
-mkdir -p generated
+sudo mkdir -p generated
 
 #default=["net","iam","c9net","cluster","nodeg","cicd","eks-cidr"]
 SECTIONS=('net' 'iam' 'c9net' 'cicd' 'cluster' 'nodeg' 'eks-cidr' 'sampleapp')
