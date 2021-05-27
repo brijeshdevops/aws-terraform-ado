@@ -20,7 +20,16 @@ provider "kubernetes" {
     ]
   }
 }
-
+terraform {
+  backend "s3" {
+    bucket         = "innovalab-working-bucket"
+    key            = "terraform.tfstate"
+    dynamodb_table = "terraform_lock"
+    region         = "us-east-1"
+    //shared_credentials_file = "C:/Users/bprajapati/.aws/credentials"
+    //profile                 = "opencloud"
+  }
+}
 data "terraform_remote_state" "eks" {
   backend = "local"
 
