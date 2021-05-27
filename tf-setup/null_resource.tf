@@ -5,7 +5,7 @@ triggers = {
 depends_on = [null_resource.sleep]
 provisioner "local-exec" {
     when = create
-    command = "sudo ./gen-backend.sh"
+    command = "./gen-backend.sh"
 }
 }
 
