@@ -1,8 +1,5 @@
 locals {
   s3_backend = "${var.project_name}-${formatdate("YYYYMMDDhhmmss", timestamp())}"
-  s3tags = {
-            Project    = "${var.project_name}",
-  }
   tags = {
             Project    = "${var.project_name}",
             Owner      = "${var.created_by}"
@@ -32,7 +29,7 @@ resource "aws_s3_bucket" "terraform_state" {
     ignore_changes = [bucket]
   }
 
-  tags = local.s3tags
+  tags = local.tags
 
 }
 

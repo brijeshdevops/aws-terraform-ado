@@ -13,7 +13,7 @@ variable "project_name" {
 variable "created_by" {
   description = "Created By"
   type        = string
-  default     = "'Brijesh Prajapati'"
+  default     = "Brijesh Prajapati"
 }
 
 variable "stages" {
