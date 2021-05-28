@@ -75,7 +75,7 @@ jobs:
       terraform apply -auto-approve  -var 'project_name="$(projectName)"' -var 'region="$(region)"' -var 'created_by="$(createdBy)"'
     name: terraformApply
     displayName: Terraform Apply
-
+    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', false))
 
   - powershell: |
       cd $(terraformDir)
