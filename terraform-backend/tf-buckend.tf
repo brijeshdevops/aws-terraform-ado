@@ -2,7 +2,7 @@ locals {
   s3_backend = "${var.project_name}-${formatdate("YYYYMMDDhhmmss", timestamp())}"
   tags = {
             Project    = "${var.project_name}"
-            Creator  = "${var.created_by}"
+            Owner      = "${var.created_by}"
   }
 }
 
@@ -48,7 +48,7 @@ resource "aws_dynamodb_table" "terraform_locks" {
   count        = var.stagecount
   depends_on   = [aws_s3_bucket.terraform_state]
   #name         = format("terraform_locks_%s", var.stages[count.index])
-  name         = format("${local.s3_backend}_%s", var.stages[count.index])
+  name         = format("${local.s3_backend}-%s", var.stages[count.index])
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
