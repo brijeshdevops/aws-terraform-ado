@@ -1,27 +1,28 @@
-variable "project_name" {
+variable "region" {
+  description = "The name of the AWS Region"
   type        = string
-  description = "Project ID"
+  default     = "us-west-1"
+}
+
+variable "project_name" {
+  description = "The name of the Project. Will be used as prefix and in tags."
+  type        = string
   default     = "learning"
 }
 
-variable "vpc_cidr" {
+variable "created_by" {
+  description = "Created By"
   type        = string
-  description = "VPC CIDR"
-  default     = "13.0.0.0/21"
-}
-
-variable "node_ssh_key" {
-  type        = string
-  description = "Name of existing SSK key for login to EC2/Nodes"
-  default     = "default-ec2-key"
+  default     = "Brijesh Prajapati"
 }
 
 variable "stages" {
-  type=list(string)
-  default=["net"]
+  type    = list(string)
+  default = ["net"]
 }
 
 variable "stagecount" {
-  type=number
-  default=1
+  type    = number
+  default = 1
 }
+

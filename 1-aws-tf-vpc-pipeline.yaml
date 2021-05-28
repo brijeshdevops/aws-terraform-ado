@@ -1,0 +1,113 @@
+trigger:
+- none
+
+pool:
+  name: awsdevokta
+#  vmImage: 'AWS'
+
+#variables:
+#  - template: config.yaml
+
+parameters:
+
+#- name: serviceArmAws
+#  displayName: Select AWS Service Connection
+#  type: string
+
+- name: region
+  displayName: Select AWS Region
+  default: us-west-1
+  type: string
+  values:
+    - us-east-1
+    - us-east-2
+    - us-west-1
+    - us-west-2
+
+- name: projectName
+  displayName: Enter Project Name
+  default: learning
+  type: string
+
+- name: createdBy
+  displayName: Enter Name of Owner
+  default: Brijesh Prajapati
+  type: string
+
+- name: destroyResource
+  displayName: Do you want to destroy the resources?
+  default: false
+  type: boolean
+  values:
+    - true
+    - false
+
+variables:
+  projectName: ${{ parameters.projectName }}
+  terraformDir: terraform-vpc
+  region: ${{ parameters.region }}
+  createdBy: ${{ parameters.createdBy }}
+#  serviceArmAws: ${{ parameters.serviceArmAws }}
+
+jobs:
+
+- job: terraform
+  displayName: Run Terraform
+  steps:
+
+  - powershell: |
+      cd $(terraformDir)
+      terraform init
+    name: terraformInit
+    displayName: Terraform Init
+
+  - powershell: |
+      pwd
+      ls
+      cd $(terraformDir)
+      ls
+      terraform plan                 -var 'project_name="$(projectName)"' -var 'region="$(region)"' -var 'created_by="$(createdBy)"'
+    name: terraformPlan
+    displayName: Terraform Plan
+    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', false))
+
+  - powershell: |
+      cd $(terraformDir)
+      terraform apply -auto-approve  -var 'project_name="$(projectName)"' -var 'region="$(region)"' -var 'created_by="$(createdBy)"'
+    name: terraformApply
+    displayName: Terraform Apply
+    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', false))
+
+  - powershell: |
+      cd $(terraformDir)
+      terraform destroy -auto-approve -var 'project_name="$(projectName)"' -var 'region="$(region)"' -var 'created_by="$(createdBy)"'
+    name: terraformDestroy
+    displayName: Terraform Destroy
+    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', true))
+
+
+#  - powershell: |
+#      cd $(terraformDir)
+#      terraform destroy -auto-approve
+#    name: terraformDestroy
+#    displayName: Terraform Destroy
+
+#  - task: TerraformTaskV1@0
+#    displayName: Terraform Init (AWS)
+#    inputs:
+#      provider: 'aws'
+#      command: 'init'
+#      region: '$(region)'
+#      backendServiceAWS: '$(serviceArmAws)'
+#      backendAWSBucketName: '$(terraformBackend)'
+#      backendAWSKey: 'terraform.tfstate'
+#      workingDirectory: '$(terraformDir)'
+#
+#  - task: TerraformTaskV1@0
+#    displayName: Terraform Plan (AWS)
+#    inputs:
+#      provider: 'aws'
+#      command: 'plan'
+#      region: '$(region)'
+#      environmentServiceNameAWS: '$(serviceArmAws)'
+#      workingDirectory: '$(terraformDir)'
