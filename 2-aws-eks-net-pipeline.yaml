@@ -58,16 +58,14 @@ jobs:
   - powershell: |
       cd $(terraformDir)
       echo "<<< Cluster Name: $(clusterName) in Region : $(region) >>>"
-      #terraform plan -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
-      terraform plan
+      terraform plan -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
     name: terraformPlan
     displayName: Terraform Plan
 
   - powershell: |
       cd $(terraformDir)
       sudo chmod 777 -R *
-      #terraform apply -auto-approve   -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
-      terraform apply -auto-approve
+      terraform apply -auto-approve   -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
     name: terraformApply
     displayName: Terraform Apply
 
