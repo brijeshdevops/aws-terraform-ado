@@ -43,7 +43,7 @@ parameters:
     - false
 
 variables:
-  clusterName: ${{ parameters.clusterName }}
+  projectName: ${{ parameters.projectName }}
   terraformDir: net
   region: ${{ parameters.region }}
 #  serviceArmAws: ${{ parameters.serviceArmAws }}
