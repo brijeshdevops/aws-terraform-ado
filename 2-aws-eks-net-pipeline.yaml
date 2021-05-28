@@ -61,7 +61,7 @@ jobs:
       pwd
       ls
       echo "AWS Region? " $AWS_REGION
-      set $AWS_REGION = $(region)
+      echo "export AWS_REGION=$(region)"
       echo "AWS Region? (set) : " $AWS_REGION
       terraform plan          #-var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
     name: terraformPlan
