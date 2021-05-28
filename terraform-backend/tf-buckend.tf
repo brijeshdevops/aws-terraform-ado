@@ -1,5 +1,9 @@
 locals {
   s3_backend = "${var.project_name}-${formatdate("YYYYMMDDhhmmss", timestamp())}"
+  tags = {
+            Project    = "${var.project_name}"
+            Created_By = "${var.created_by}"
+  }
 }
 
 resource "aws_s3_bucket" "terraform_state" {
@@ -25,10 +29,7 @@ resource "aws_s3_bucket" "terraform_state" {
     ignore_changes = [bucket]
   }
 
-  tags = {
-    Project    = var.project_name
-    Created_By = var.created_by
-  }
+  tags = local.tags
 
 }
 
@@ -56,10 +57,7 @@ resource "aws_dynamodb_table" "terraform_locks" {
     type = "S"
   }
 
-  tags = {
-    Project    = var.project_name
-    Created_By = var.created_by
-  }
+  tags = local.tags
 
 }
 
