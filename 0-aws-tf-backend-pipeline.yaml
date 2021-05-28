@@ -68,7 +68,7 @@ jobs:
       terraform plan                 -var 'project_name="$(projectName)"' -var 'region="$(region)"' -var 'created_by="$(createdBy)"'
     name: terraformPlan
     displayName: Terraform Plan
-
+    condition: and(succeeded(), eq('${{ parameters.destroyResource }}', false))
 
   - powershell: |
       cd $(terraformDir)
