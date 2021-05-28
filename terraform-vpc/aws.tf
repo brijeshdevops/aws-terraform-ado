@@ -24,7 +24,7 @@ terraform {
   backend "s3" {
     bucket         = "learning-20210528233351-net"
     key            = "terraform/terraform_locks.tfstate"
-    region         = var.region
+    region         = "us-west-1"
     dynamodb_table = "learning-20210528233351-net"
     encrypt        = "true"
   }
