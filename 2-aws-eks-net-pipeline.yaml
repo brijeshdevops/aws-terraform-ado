@@ -56,20 +56,23 @@ jobs:
     displayName: Terraform Init
 
   - powershell: |
-      cd $(terraformDir)
       pwd
       ls
+      cd $(terraformDir)
       echo "<<< Cluster Name: $(clusterName) in Region : $(region) >>>"
-      terraform plan          #-var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
+      pwd
+      ls
+
+      #terraform plan          #-var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
     name: terraformPlan
     displayName: Terraform Plan
 
-  - powershell: |
-      cd $(terraformDir)
-      #sudo chmod 777 -R *
-      terraform apply -auto-approve   #-var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
-    name: terraformApply
-    displayName: Terraform Apply
+#  - powershell: |
+#      cd $(terraformDir)
+#      #sudo chmod 777 -R *
+#      terraform apply -auto-approve   #-var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
+#    name: terraformApply
+#    displayName: Terraform Apply
 
 
   - powershell: |
