@@ -60,19 +60,19 @@ jobs:
       echo "<<< Cluster Name: $(clusterName) in Region : $(region) >>>"
       pwd
       ls
-      echo "AWS Region? " $AWS_REGION
-      echo "export AWS_REGION=$(region)"
-      echo "AWS Region? (set) : " $AWS_REGION
-      terraform plan          #-var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
+      Write-Host "AWS Region? " $AWS_REGION
+      Write-Host "export AWS_REGION=$(region)"
+      Write-Host "AWS Region? (set) : " $AWS_REGION
+      #terraform plan          #-var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
     name: terraformPlan
     displayName: Terraform Plan
 
-  - powershell: |
-      cd $(terraformDir)
-      sudo chmod 777 -R *
-      terraform apply -auto-approve   -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
-    name: terraformApply
-    displayName: Terraform Apply
+#  - powershell: |
+#      cd $(terraformDir)
+#      sudo chmod 777 -R *
+#      terraform apply -auto-approve   -var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
+#    name: terraformApply
+#    displayName: Terraform Apply
 
 
   - powershell: |
