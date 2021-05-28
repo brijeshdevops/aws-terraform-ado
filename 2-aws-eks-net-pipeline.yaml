@@ -57,6 +57,8 @@ jobs:
 
   - powershell: |
       cd $(terraformDir)
+      pwd
+      ls
       echo "<<< Cluster Name: $(clusterName) in Region : $(region) >>>"
       terraform plan          #-var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
     name: terraformPlan
