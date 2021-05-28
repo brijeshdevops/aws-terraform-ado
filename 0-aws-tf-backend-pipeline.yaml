@@ -44,7 +44,7 @@ parameters:
 
 variables:
   projectName: ${{ parameters.projectName }}
-  terraformDir: net
+  terraformDir: terraform-backend
   region: ${{ parameters.region }}
 #  serviceArmAws: ${{ parameters.serviceArmAws }}
 
