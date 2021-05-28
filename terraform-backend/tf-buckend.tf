@@ -2,7 +2,6 @@ locals {
   s3_backend = "${var.project_name}-${formatdate("YYYYMMDDhhmmss", timestamp())}"
   tags = {
             Project    = "${var.project_name}"
-            Created_By = "${var.created_by}"
   }
 }
 
