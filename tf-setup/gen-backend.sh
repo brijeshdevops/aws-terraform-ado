@@ -59,9 +59,9 @@ do
     printf "}\n" >> $of
     ##
     printf "provider \"aws\" {\n" >> $of
-    printf "region = var.region\n"  >> $of
-    printf "shared_credentials_file = \"~/.aws/credentials\"\n" >> $of
-    printf "profile = var.profile\n" >> $of
+    printf "region = \"%s\"\n"  $reg >> $of
+    #printf "shared_credentials_file = \"~/.aws/credentials\"\n" >> $of
+    #printf "profile = var.profile\n" >> $of
     printf "}\n" >> $of
 
     # copy the files into place
