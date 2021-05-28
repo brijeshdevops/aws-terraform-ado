@@ -60,7 +60,9 @@ jobs:
       echo "<<< Cluster Name: $(clusterName) in Region : $(region) >>>"
       pwd
       ls
-      echo $AWS_REGION
+      echo "AWS Region? " $AWS_REGION
+      set $AWS_REGION = $(region)
+      echo "AWS Region? (set) : " $AWS_REGION
       terraform plan          #-var 'cluster-name="$(clusterName)"' -var 'region="$(region)"'
     name: terraformPlan
     displayName: Terraform Plan
