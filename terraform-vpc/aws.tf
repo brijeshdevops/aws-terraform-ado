@@ -22,10 +22,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "learning-20210528233351-net"
+    bucket         = "learning-20210529172156-net"
     key            = "terraform/terraform_locks.tfstate"
-    region         = "us-west-1"
-    dynamodb_table = "learning-20210528233351-net"
+    region         = "us-west-2"
+    dynamodb_table = "learning-20210529172156-net"
     encrypt        = "true"
   }
 
