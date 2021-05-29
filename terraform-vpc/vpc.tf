@@ -1,63 +1,63 @@
-resource "aws_vpc" "demo" {
+
+resource "aws_vpc" "project_vpc" {
   cidr_block       = var.vpc_cidr
   enable_dns_hostnames = true
 
-  tags = {
-    Name = "${local.common_prefix}-vpc"
-  }
+  tags = local.tags
 }
 
+
 resource "aws_subnet" "public_1" {
-  vpc_id     = aws_vpc.demo.id
-  cidr_block = cidrsubnet(aws_vpc.demo.cidr_block, 4, 0)
+  vpc_id     = aws_vpc.project_vpc.id
+  cidr_block = cidrsubnet(aws_vpc.project_vpc.cidr_block, 4, 0)
   availability_zone = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${local.common_prefix}-public-subnet-${data.aws_availability_zones.available.names[0]}"
+    Name = "${local.prefix}-public-subnet-${data.aws_availability_zones.available.names[0]}"
   }
 }
 
 resource "aws_subnet" "public_2" {
-  vpc_id     = aws_vpc.demo.id
-  cidr_block = cidrsubnet(aws_vpc.demo.cidr_block, 4, 1)
+  vpc_id     = aws_vpc.project_vpc.id
+  cidr_block = cidrsubnet(aws_vpc.project_vpc.cidr_block, 4, 1)
   availability_zone = data.aws_availability_zones.available.names[1]
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${local.common_prefix}-public-subnet-${data.aws_availability_zones.available.names[1]}"
+    Name = "${local.prefix}-public-subnet-${data.aws_availability_zones.available.names[1]}"
   }
 }
 
 resource "aws_subnet" "public_3" {
-  vpc_id     = aws_vpc.demo.id
-  cidr_block = cidrsubnet(aws_vpc.demo.cidr_block, 4, 2)
+  vpc_id     = aws_vpc.project_vpc.id
+  cidr_block = cidrsubnet(aws_vpc.project_vpc.cidr_block, 4, 2)
   availability_zone = data.aws_availability_zones.available.names[2]
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${local.common_prefix}-public-subnet-${data.aws_availability_zones.available.names[2]}"
+    Name = "${local.prefix}-public-subnet-${data.aws_availability_zones.available.names[2]}"
   }
 }
 
-resource "aws_internet_gateway" "demo" {
-  vpc_id = aws_vpc.demo.id
+resource "aws_internet_gateway" "project_igw" {
+  vpc_id = aws_vpc.project_vpc.id
 
   tags = {
-    Name = "${local.common_prefix}-igw"
+    Name = "${local.prefix}-igw"
   }
 }
 
 resource "aws_route_table" "public" {
-    vpc_id = aws_vpc.demo.id
+    vpc_id = aws_vpc.project_vpc.id
 
     route {
         cidr_block = "0.0.0.0/0"
-        gateway_id = aws_internet_gateway.demo.id
+        gateway_id = aws_internet_gateway.project_igw.id
     }
 
     tags = {
-        Name = "${local.common_prefix}-public-rt"
+        Name = "${local.prefix}-public-rt"
     }
 }
 
@@ -77,32 +77,32 @@ resource "aws_route_table_association" "public_3" {
 }
 
 resource "aws_subnet" "nated_1" {
-  vpc_id     = aws_vpc.demo.id
-  cidr_block = cidrsubnet(aws_vpc.demo.cidr_block, 4, 3)
+  vpc_id     = aws_vpc.project_vpc.id
+  cidr_block = cidrsubnet(aws_vpc.project_vpc.cidr_block, 4, 3)
   availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
-    Name = "${local.common_prefix}-nated-subnet-${data.aws_availability_zones.available.names[0]}"
+    Name = "${local.prefix}-nated-subnet-${data.aws_availability_zones.available.names[0]}"
   }
 }
 
 resource "aws_subnet" "nated_2" {
-  vpc_id     = aws_vpc.demo.id
-  cidr_block = cidrsubnet(aws_vpc.demo.cidr_block, 4, 4)
+  vpc_id     = aws_vpc.project_vpc.id
+  cidr_block = cidrsubnet(aws_vpc.project_vpc.cidr_block, 4, 4)
   availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = {
-    Name = "${local.common_prefix}-nated-subnet-${data.aws_availability_zones.available.names[1]}"
+    Name = "${local.prefix}-nated-subnet-${data.aws_availability_zones.available.names[1]}"
   }
 }
 
 resource "aws_subnet" "nated_3" {
-  vpc_id     = aws_vpc.demo.id
-  cidr_block = cidrsubnet(aws_vpc.demo.cidr_block, 4, 5)
+  vpc_id     = aws_vpc.project_vpc.id
+  cidr_block = cidrsubnet(aws_vpc.project_vpc.cidr_block, 4, 5)
   availability_zone = data.aws_availability_zones.available.names[2]
 
   tags = {
-    Name = "${local.common_prefix}-nated-subnet-${data.aws_availability_zones.available.names[2]}"
+    Name = "${local.prefix}-nated-subnet-${data.aws_availability_zones.available.names[2]}"
   }
 }
 
@@ -134,7 +134,7 @@ resource "aws_nat_gateway" "gw_3" {
 }
 
 resource "aws_route_table" "nated_1" {
-    vpc_id = aws_vpc.demo.id
+    vpc_id = aws_vpc.project_vpc.id
 
     route {
         cidr_block = "0.0.0.0/0"
@@ -142,12 +142,12 @@ resource "aws_route_table" "nated_1" {
     }
 
     tags = {
-        Name = "${local.common_prefix}-nated-rt-1"
+        Name = "${local.prefix}-nated-rt-1"
     }
 }
 
 resource "aws_route_table" "nated_2" {
-    vpc_id = aws_vpc.demo.id
+    vpc_id = aws_vpc.project_vpc.id
 
     route {
         cidr_block = "0.0.0.0/0"
@@ -155,12 +155,12 @@ resource "aws_route_table" "nated_2" {
     }
 
     tags = {
-        Name = "${local.common_prefix}-nated-rt-2"
+        Name = "${local.prefix}-nated-rt-2"
     }
 }
 
 resource "aws_route_table" "nated_3" {
-    vpc_id = aws_vpc.demo.id
+    vpc_id = aws_vpc.project_vpc.id
 
     route {
         cidr_block = "0.0.0.0/0"
@@ -168,7 +168,7 @@ resource "aws_route_table" "nated_3" {
     }
 
     tags = {
-        Name = "${local.common_prefix}-nated-rt-3"
+        Name = "${local.prefix}-nated-rt-3"
     }
 }
 
@@ -184,12 +184,52 @@ resource "aws_route_table_association" "nated_2" {
 
 
 
+### Common Security Group
 
+resource "aws_security_group" "project_cmnsg" {
+  name = "${local.prefix}-commonuse-sg"
+  description = "Security group for Common Use"
+  vpc_id = aws_vpc.project_vpc.id
+
+  egress {
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+      description = "VPC Access"
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      cidr_blocks = [
+          aws_vpc.demo.cidr_block
+      ]
+  }
+
+  ingress {
+      description = "Default Self Access"
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      self = "true"
+  }
+
+  ingress {
+      description = "Home-VPN"
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      cidr_blocks = ["104.190.188.27/32"]
+  }
+
+}
 
 output "vpc_id" {
-  value = aws_vpc.demo.id
+  value = aws_vpc.project_vpc.id
 }
 
 output "vpc_cidr" {
-  value = aws_vpc.demo.cidr_block
+  value = aws_vpc.project_vpc.cidr_block
 }

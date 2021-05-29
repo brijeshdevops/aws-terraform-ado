@@ -26,3 +26,8 @@ variable "stagecount" {
   default = 1
 }
 
+variable "vpc_cidr" {
+  type        = string
+  description = "VPC CIDR"
+  default     = "170.0.0.0/21"
+}

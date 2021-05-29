@@ -38,3 +38,10 @@ provider "aws" {
 provider "null" {}
 provider "external" {}
 
+locals {
+  prefix = "${var.project_name}"
+  tags   = {
+                Project    = "${var.project_name}",
+                Owner      = "${var.created_by}"
+           }
+}
