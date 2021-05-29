@@ -204,7 +204,7 @@ resource "aws_security_group" "project_cmnsg" {
       to_port = 0
       protocol = "-1"
       cidr_blocks = [
-          aws_vpc.demo.cidr_block
+          aws_vpc.project_vpc.cidr_block
       ]
   }
 

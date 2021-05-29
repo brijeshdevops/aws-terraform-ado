@@ -38,6 +38,13 @@ provider "aws" {
 provider "null" {}
 provider "external" {}
 
+data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
+
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 locals {
   prefix = "${var.project_name}"
   tags   = {
